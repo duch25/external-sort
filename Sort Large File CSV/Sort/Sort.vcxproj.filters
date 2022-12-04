@@ -24,12 +24,18 @@
     <ClInclude Include="InternalSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MinHeap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExternalSort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InternalSort.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinHeap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -142,10 +142,12 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="ExternalSort.h" />
     <ClInclude Include="InternalSort.h" />
+    <ClInclude Include="MinHeap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExternalSort.cpp" />
     <ClCompile Include="InternalSort.cpp" />
+    <ClCompile Include="MinHeap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
