@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="ExternalSort.cpp" />
     <ClCompile Include="InternalSort.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MinHeap.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

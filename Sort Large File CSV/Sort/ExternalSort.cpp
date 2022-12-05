@@ -82,3 +82,97 @@ int preProcessing(string inputFile, int memLimit) {
 
     return fileCount;
 }
+
+void mergeChunksFile(int left, int right, int pos)
+{
+
+    int fileCount = right - left + 1;
+
+    vector<ifstream> fin(fileCount);
+    for (int i = 0; i < fileCount; ++i)
+        fin[i].open(getFileName(left + i));
+
+    // merge process using min heap.
+    MinHeap minHeap;
+
+    for (int i = 0; i < fileCount; ++i)
+    {
+        string rowContent;
+        if (!fin[i].eof())
+        {
+            getline(fin[i], rowContent);
+            minHeap.push(HeapNode(rowContent, i));
+        }
+    }
+
+    cout << "Merging chunks from file_" << left << " to file_" << right << " into file_" << pos << "\n\n";
+
+    ofstream fout;
+    fout.open(getFileName(pos));
+
+    while (!minHeap.empty())
+    {
+        string rowContent = minHeap.top().getContent();
+        int index = minHeap.top().getIndex();
+        minHeap.pop();
+
+        fout << rowContent << endl;
+
+        if (!fin[index].eof())
+        {
+            getline(fin[index], rowContent);
+            minHeap.push(HeapNode(rowContent, index));
+        }
+    }
+
+    cout << "Merge above chunks file done!\n\n";
+
+    for (int i = 0; i < fileCount; ++i)
+        fin[i].close();
+    fout.close();
+}
+
+void mergeTotalFile(int fileCount, string outputFile, int memLimit)
+{
+
+    int left = 1;
+    int right = fileCount;
+
+    // set gap make sure data fit on RAM.
+    int gap = (memLimit / sizeof(HeapNode)) - 1;
+
+    while (left < right)
+    {
+        int pos = right;
+
+        while (left <= right)
+        {
+            int p = min(left + gap, right);
+
+            ++pos;
+            mergeChunksFile(left, p, pos);
+            left = p + 1;
+        }
+
+        right = pos;
+    }
+
+    cout << "Merge total file done!\n\n";
+
+    // rename last file to match output file.
+    if (!rename(getFileName(right).c_str(), outputFile.c_str()))
+        cout << "Rename file done!";
+    else
+        cout << "Rename file failed!";
+
+
+    // remove chunks file.
+    for (int i = 1; i < right; ++i)
+    {
+        string fileName = getFileName(i);
+        if (remove(fileName.c_str()))
+        {
+            cout << "Remove " << fileName << " failed\n\n";
+        }
+    }
+}
