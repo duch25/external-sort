@@ -7,7 +7,7 @@
 
 int preProcessing(string inputFile, int memLimit);
 
-void mergeChunksFile(int left, int right, int pos);
+void mergeChunksFile(string outputFile, int left, int right, int pos, bool done);
 
 void mergeTotalFile(int fileCount, string outputFile, int memLimit);
 
