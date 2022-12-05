@@ -1,11 +1,5 @@
 #include "ExternalSort.h"
 
-string getFileName(int fileCount) {
-    string fileName = "file_" + fileCount;
-    fileName += ".csv";
-    return fileName;
-}
-
 int preProcessing(string inputFile, int memLimit) {
     ifstream fin;
     fin.open(inputFile);
@@ -38,7 +32,10 @@ int preProcessing(string inputFile, int memLimit) {
 
             ++fileCount;
 
-            fout.open(getFileName(fileCount));
+            // use stringstream to optimize memory
+            stringstream s;
+            s << "file_" << fileCount << ".csv";
+            fout.open(s.str());
 
             int dataSize = data.size();
             for (int i = 0; i < dataSize - 1; ++i)
@@ -65,7 +62,10 @@ int preProcessing(string inputFile, int memLimit) {
         quickSort(data, 0, data.size() - 1);
 
         ++fileCount;
-        fout.open(getFileName(fileCount));
+
+        stringstream s;
+        s << "file_" << fileCount << ".csv";
+        fout.open(s.str());
 
         int dataSize = data.size();
         for (int i = 0; i < dataSize - 1; ++i)
@@ -90,7 +90,11 @@ void mergeChunksFile(int left, int right, int pos)
 
     vector<ifstream> fin(fileCount);
     for (int i = 0; i < fileCount; ++i)
-        fin[i].open(getFileName(left + i));
+    {
+        stringstream s;
+        s << "file_" << left + i << ".csv";
+        fin[i].open(s.str());
+    }
 
     // merge process using min heap.
     MinHeap minHeap;
@@ -108,7 +112,9 @@ void mergeChunksFile(int left, int right, int pos)
     cout << "Merging chunks from file_" << left << " to file_" << right << " into file_" << pos << "\n\n";
 
     ofstream fout;
-    fout.open(getFileName(pos));
+    stringstream s;
+    s << "file_" << pos << ".csv";
+    fout.open(s.str());
 
     while (!minHeap.empty())
     {
@@ -160,7 +166,9 @@ void mergeTotalFile(int fileCount, string outputFile, int memLimit)
     cout << "Merge total file done!\n\n";
 
     // rename last file to match output file.
-    if (!rename(getFileName(right).c_str(), outputFile.c_str()))
+    stringstream s;
+    s << "file_" << right << ".csv";
+    if (!rename(s.str().c_str(), outputFile.c_str()))
         cout << "Rename file done!";
     else
         cout << "Rename file failed!";
@@ -169,10 +177,11 @@ void mergeTotalFile(int fileCount, string outputFile, int memLimit)
     // remove chunks file.
     for (int i = 1; i < right; ++i)
     {
-        string fileName = getFileName(i);
-        if (remove(fileName.c_str()))
+        stringstream s;
+        s << "file_" << i << ".csv";
+        if (remove(s.str().c_str()))
         {
-            cout << "Remove " << fileName << " failed\n\n";
+            cout << "Remove " << s.str() << " failed\n\n";
         }
     }
 }

@@ -5,8 +5,6 @@
 #include "InternalSort.h"
 #include "MinHeap.h"
 
-string getFileName(int fileCount);
-
 int preProcessing(string inputFile, int memLimit);
 
 void mergeChunksFile(int left, int right, int pos);
