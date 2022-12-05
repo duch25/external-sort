@@ -2,25 +2,6 @@
 
 #pragma region MINHEAP
 
-void MinHeap::minHeapify(int i)
-{
-    int dataSize = data.size();
-    int smallest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
-
-    if (left < dataSize && data[left].getID() < data[smallest].getID())
-        smallest = left;
-    if (right < dataSize && data[right].getID() < data[smallest].getID())
-        smallest = right;
-
-    if (smallest != i)
-    {
-        swap(data[smallest], data[i]);
-        minHeapify(smallest);
-    }
-}
-
 HeapNode MinHeap::top()
 {
     return data[0];

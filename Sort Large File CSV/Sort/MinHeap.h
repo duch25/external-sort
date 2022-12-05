@@ -23,8 +23,26 @@ class MinHeap
 private:
     vector<HeapNode> data;
 
+    void minHeapify(int i)
+    {
+        int dataSize = data.size();
+        int smallest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < dataSize && data[left].getID() < data[smallest].getID())
+            smallest = left;
+        if (right < dataSize && data[right].getID() < data[smallest].getID())
+            smallest = right;
+
+        if (smallest != i)
+        {
+            swap(data[smallest], data[i]);
+            minHeapify(smallest);
+        }
+    }
+
 public:
-    void minHeapify(int i);
 
     HeapNode top();
 
