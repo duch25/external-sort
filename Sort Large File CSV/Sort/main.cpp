@@ -1,6 +1,6 @@
 #include "ExternalSort.h"
 
-string INPUT_FILE = "test.csv";
+string INPUT_FILE = "Books_rating.csv";
 string OUTPUT_FILE = "sorted_books_rating.csv";
 long long INTERNAL_MEMORY_LIMIT = 204800000;
 

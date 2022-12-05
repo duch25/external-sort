@@ -29,6 +29,7 @@ int preProcessing(string inputFile, int memLimit) {
 
     while (!fin.eof()) {
         getline(fin, rowContent);
+        if (rowContent.size() == 0) continue;
         if (sumMem + rowContent.size() < memLimit) {
             // include newline character '\n'
             sumMem += rowContent.size() + 1;
@@ -71,27 +72,23 @@ int preProcessing(string inputFile, int memLimit) {
 
     // last chunk file of input file.
     if (data.size() > 0) {
-        if (data.back() == "")
-            data.pop_back();
-        if (data.size() > 0) {
-            quickSort(data, 0, data.size() - 1);
+		quickSort(data, 0, data.size() - 1);
 
-            ++fileCount;
+		++fileCount;
 
-            stringstream s;
-            s << "file_" << fileCount << ".csv";
-            fout.open(s.str(), ios::out | ios::binary);
+		stringstream s;
+		s << "file_" << fileCount << ".csv";
+		fout.open(s.str(), ios::out | ios::binary);
 
-            cout << "Writing data into " << s.str() << "\n\n";
-            if (inputSize <= memLimit)
-                fout << title << '\n';
+		cout << "Writing data into " << s.str() << "\n\n";
+		if (inputSize <= memLimit)
+			fout << title << '\n';
 
-            int dataSize = data.size();
-            for (int i = 0; i < dataSize - 1; ++i)
-                fout << data[i] << '\n';
-            fout << data[dataSize - 1];
-            fout.close();
-        }
+		int dataSize = data.size();
+		for (int i = 0; i < dataSize - 1; ++i)
+			fout << data[i] << '\n';
+		fout << data[dataSize - 1];
+		fout.close();
     }
     fin.close();
 
