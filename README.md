@@ -1,6 +1,6 @@
 # External Sort
 
-## **_Sort Large File CSV with Merge Sort Algorithm._** 
+**Sort Large File CSV with Merge Sort Algorithm.** 
 
 ## Members:
    * ### [Nguyễn Đức Hoài](https://github.com/duch25)
